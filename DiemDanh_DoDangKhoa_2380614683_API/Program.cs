@@ -83,11 +83,10 @@ var app = builder.Build();
 // Tự tạo database + dữ liệu mẫu
 await DbSeeder.SeedAsync(app.Services);
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Bật Swagger cả trên Render để thầy cô / nhóm thử API; vào "/" tự chuyển sang Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 // Tắt để máy ảo gọi được http://10.0.2.2:5080 (Conveyor vẫn có https riêng)
 // app.UseHttpsRedirection();
