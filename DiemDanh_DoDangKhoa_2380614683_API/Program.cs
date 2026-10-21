@@ -24,7 +24,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
         o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     })
     .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddErrorDescriber<ViIdentityErrorDescriber>();   // thông báo lỗi tiếng Việt
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<EmailService>();

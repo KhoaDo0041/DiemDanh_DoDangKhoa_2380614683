@@ -96,7 +96,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             TextFormField(
               controller: _username,
               decoration: const InputDecoration(labelText: 'Tên đăng nhập', prefixIcon: Icon(Icons.person_outline)),
-              validator: (v) => (v == null || v.trim().length < 3) ? 'Ít nhất 3 ký tự' : null,
+              validator: (v) {
+                if (v == null || v.trim().length < 3) return 'Ít nhất 3 ký tự';
+                // Giống quy định của server (ASP.NET Identity)
+                if (!RegExp(r'^[a-zA-Z0-9._@+-]+$').hasMatch(v.trim())) {
+                  return 'Chỉ dùng chữ không dấu, số và . _ - @ + (không có dấu cách)';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 12),
             TextFormField(
