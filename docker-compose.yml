@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   api:
-    build: ./DiemDanh_DoDangKhoa_2380614683_API
+    build: .
     depends_on:
       db:
         condition: service_healthy

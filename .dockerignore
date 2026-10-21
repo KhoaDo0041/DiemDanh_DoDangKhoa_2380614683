@@ -1,0 +1,15 @@
+# Chỉ cần thư mục API để build
+.git/
+.vs/
+diemdanh_dodangkhoa_2380614683/
+android_snippets/
+*.md
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.slnx
+**/Properties/launchSettings.json
+docker-compose.yml
+Dockerfile
+.dockerignore
