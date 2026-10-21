@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# File cấu hình chứa BASE_URL (mỗi máy tự tạo, không đưa lên GitHub)
+.env
