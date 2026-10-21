@@ -1,0 +1,14 @@
+<!-- 1) Dán NGAY DƯỚI dòng <manifest xmlns:android=...> -->
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+<!-- 2) Thêm thuộc tính này vào thẻ <application ...> (cho phép gọi http://10.0.2.2) -->
+android:usesCleartextTraffic="true"
+
+<!-- 3) Trong thẻ <queries> có sẵn ở cuối file, thêm intent này (để mở Google Maps) -->
+<intent>
+    <action android:name="android.intent.action.VIEW"/>
+    <data android:scheme="https"/>
+</intent>
