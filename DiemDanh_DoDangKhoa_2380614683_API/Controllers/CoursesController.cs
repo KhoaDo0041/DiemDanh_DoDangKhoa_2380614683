@@ -148,7 +148,7 @@ namespace DiemDanh_DoDangKhoa_2380614683_API.Controllers
                 return NotFound(new { Status = false, Message = "Không tìm thấy môn học" });
 
             var key = dto.StudentCodeOrUsername.Trim();
-            var student = await _userManager.Users.FirstOrDefaultAsync(u => u.Code == key || u.UserName == key);
+            var student = await _userManager.Users.FirstOrDefaultAsync(u => u.Code == key || u.NormalizedUserName == key.ToUpperInvariant());
             if (student == null || !await _userManager.IsInRoleAsync(student, Roles.Student))
                 return BadRequest(new { Status = false, Message = "Không tìm thấy sinh viên với MSSV / tên đăng nhập này" });
 

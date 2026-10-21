@@ -20,6 +20,9 @@ ENV ASPNETCORE_ENVIRONMENT=Production \
     PORT=8080
 EXPOSE 8080
 
+# Npgsql cần thư viện GSSAPI (thiếu thì log báo lỗi libgssapi_krb5.so.2)
+RUN apt-get update && apt-get install -y --no-install-recommends libgssapi-krb5-2     && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/publish ./
 
 # Chạy bằng user không phải root (có sẵn trong image .NET 8+)

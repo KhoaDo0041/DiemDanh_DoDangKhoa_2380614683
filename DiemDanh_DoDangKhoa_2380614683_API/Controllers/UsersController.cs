@@ -38,9 +38,10 @@ namespace DiemDanh_DoDangKhoa_2380614683_API.Controllers
             var query = _userManager.Users.AsQueryable();
             if (!string.IsNullOrWhiteSpace(search))
             {
-                var s = search.Trim();
-                query = query.Where(u => u.UserName!.Contains(s) || u.FullName.Contains(s)
-                                         || (u.Code != null && u.Code.Contains(s)) || u.Email!.Contains(s));
+                // PostgreSQL phân biệt hoa/thường -> dùng ILIKE để tìm không phân biệt
+                var s = $"%{search.Trim()}%";
+                query = query.Where(u => EF.Functions.ILike(u.UserName!, s) || EF.Functions.ILike(u.FullName, s)
+                                         || (u.Code != null && EF.Functions.ILike(u.Code, s)) || EF.Functions.ILike(u.Email!, s));
             }
             var users = await query.OrderBy(u => u.FullName).ToListAsync();
 
