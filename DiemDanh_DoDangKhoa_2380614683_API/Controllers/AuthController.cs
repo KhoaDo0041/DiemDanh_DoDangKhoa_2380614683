@@ -260,14 +260,15 @@ namespace DiemDanh_DoDangKhoa_2380614683_API.Controllers
         }
 
         /// Tạo mã 6 số (Identity, có hạn vài phút) và gửi email.
-        /// Chưa cấu hình Gmail -> trả mã về (chỉ khi Development) để demo.
+        /// Chưa cấu hình Gmail -> trả mã về để demo (khi Development hoặc bật Email:ShowCodeIfNotSent).
         private async Task<(bool sent, string? devCode)> SendCodeAsync(AppUser user, string purpose, string title)
         {
             var code = await _userManager.GenerateUserTokenAsync(user, TokenOptions.DefaultEmailProvider, purpose);
             var sent = await _email.SendAsync(user.Email!, $"{title}: {code}",
                 EmailService.CodeEmail(user.FullName, title, code));
             if (!sent) _logger.LogWarning("==> {Title} cho {User}: {Code}", title, user.UserName, code);
-            return (sent, !sent && _env.IsDevelopment() ? code : null);
+            var showCode = _env.IsDevelopment() || _config.GetValue<bool>("Email:ShowCodeIfNotSent");
+            return (sent, !sent && showCode ? code : null);
         }
 
         private static string Mask(string? email)
